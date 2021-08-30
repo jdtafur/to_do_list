@@ -1,0 +1,18 @@
+.button {
+    border: solid #3e61a6;
+    margin-bottom: 50px;
+    margin-left: 10px;
+    background-color: #3e61a6;
+    color: #fcfff2;
+    width: auto;
+}
+
+.content {
+    margin-top: 20px;
+}
+
+.content span{
+    color: #3e61a6;
+    font-size: 150%;
+    margin: 0 5px;
+}
