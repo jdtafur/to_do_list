@@ -1,0 +1,15 @@
+.custom-style {
+    background-color: #eaf2f8;
+    color: #3e61a6;
+}
+
+.footer-style{
+    background-color: #eaf2f8;
+    padding-block: 10px;
+}
+
+#save-button {
+    background-color: #3e61a6;
+    color: white;
+    margin-inline: 5px;
+}
