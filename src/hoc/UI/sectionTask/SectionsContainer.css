@@ -1,0 +1,10 @@
+.sections-container{
+    align-items: center;
+    justify-content: center;
+}
+
+.sections-container li:hover,
+.sections-container li:active,
+.sections-container li.active{
+    cursor: pointer;
+}
