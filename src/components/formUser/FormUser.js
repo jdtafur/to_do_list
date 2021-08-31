@@ -36,7 +36,7 @@ class FormUser extends Component{
         users.push(user);
         localStorage.setItem('users', JSON.stringify(users));
 
-        //this.props.loadUsers();
+        this.props.loadUsers();
         this.props.onHide();
     }
 
