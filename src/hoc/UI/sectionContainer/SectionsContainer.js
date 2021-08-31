@@ -7,7 +7,37 @@ import SectionUser from "../sectionUser/SectionUser";
 
 class SectionsContainer extends React.Component{
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            tasks: [],
+            users: [],
+        };
+
+        this.loadTasks = this.loadTasks.bind(this);
+        this.loadUsers = this.loadUsers.bind(this);
+    }
+
+    componentDidMount() {
+        this.loadTasks();
+        this.loadUsers();
+    }
+
+    loadUsers(){
+        const users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+        this.setState({users: users});
+    }
+
+    loadTasks(){
+        const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+        this.setState({tasks: tasks});
+    }
+
     render() {
+
+        const {tasks, users} = this.state;
+
         return (
             <div >
                 <Tabs id="noanim-tab-example"
@@ -16,10 +46,20 @@ class SectionsContainer extends React.Component{
                       transition={false}
                       >
                     <Tab eventKey="users" title="Usuarios">
-                        <SectionUser/>
+                        <SectionUser
+                            loadUsers={this.loadUsers}
+                            users={users}
+                            loadTasks={this.loadTasks}
+                            tasks={tasks}
+                        />
                     </Tab>
                     <Tab eventKey="tasks" title="Tareas">
-                        <SectionTask/>
+                        <SectionTask
+                            loadTasks={this.loadTasks}
+                            tasks={tasks}
+                            loadUsers={this.loadUsers}
+                            users={users}
+                        />
                     </Tab>
                 </Tabs>
             </div>

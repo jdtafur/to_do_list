@@ -11,22 +11,15 @@ class SectionUser extends React.Component{
         super(props);
 
         this.state = {
-            users: [],
             modalCreate: false,
         };
 
         this.openModalCreate = this.openModalCreate.bind(this);
         this.closeModalCreate = this.closeModalCreate.bind(this);
-        this.loadUsers = this.loadUsers.bind(this);
     }
 
     componentDidMount() {
-        this.loadUsers();
-    }
-
-    loadUsers(){
-        const users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
-        this.setState({users: users});
+        this.props.loadUsers();
     }
 
     closeModalCreate(){
@@ -39,7 +32,7 @@ class SectionUser extends React.Component{
 
     render() {
 
-        const {users, modalCreate} = this.state;
+        const {modalCreate} = this.state;
 
         return (
             <Container className="content">
@@ -48,7 +41,7 @@ class SectionUser extends React.Component{
                     onHide={this.closeModalCreate}
                     modalTitle="Crear usuario"
                     nameAction="Crear"
-                    loadUsers={this.loadUsers}
+                    loadUsers={this.props.loadUsers}
                 />
                 <Row>
                     <Button className="button" onClick={this.openModalCreate}>Agregar usuario</Button>
@@ -64,7 +57,7 @@ class SectionUser extends React.Component{
                         </thead>
                         <tbody>
                         {
-                            users.map((user) => {
+                            this.props.users.map((user) => {
                                 return (
                                     <tr key={user.id}>
                                         <td>{user.name}</td>

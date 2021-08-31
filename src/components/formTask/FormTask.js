@@ -3,6 +3,8 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalContainer from "../modalContainer/ModalContainer";
 
+const states = [{id:1, state:'Open'},{id:2, state:'In-Progress'},{id:3, state:'Completed'},{id:4, state:'Archived'}]
+
 class FormTask extends Component{
 
     constructor(props) {
@@ -88,7 +90,15 @@ class FormTask extends Component{
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label>Estado</Form.Label>
-                                        <Form.Control required  type="text" placeholder="estado" value={state} onChange={this.handleInputChange} name="state"/>
+                                        <Form.Control required onChange={this.handleInputChange} name="state" as="select">
+                                            {
+                                                states.map((item) => {
+                                                    return (
+                                                        <option key={item.id} value={item.state}>{item.state}</option>
+                                                    )
+                                                })
+                                            }
+                                        </Form.Control>
                                     </Form.Group>
                                     <div className="mt-3 button-container">
                                         <Button id="save-button" variant="default" type="submit">

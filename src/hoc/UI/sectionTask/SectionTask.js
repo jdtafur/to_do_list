@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import './SectionTask.css';
 import FormTask from "../../../components/formTask/FormTask";
+import FormAssignTask from "../../../components/formAssignTask/FormAssignTask";
 
 class SectionTask extends React.Component{
 
@@ -10,9 +11,9 @@ class SectionTask extends React.Component{
         super(props);
 
         this.state = {
-            tasks: [],
             modalCreate: false,
             modalEdit: false,
+            modalAssign: false,
             idTaskSelected: -1,
         };
 
@@ -20,51 +21,35 @@ class SectionTask extends React.Component{
         this.closeModalCreate = this.closeModalCreate.bind(this);
         this.openModalEdit = this.openModalEdit.bind(this);
         this.closeModalEdit = this.closeModalEdit.bind(this);
-        this.loadTasks = this.loadTasks.bind(this);
+        this.openModalAssign = this.openModalAssign.bind(this);
+        this.closeModalAssign = this.closeModalAssign.bind(this);
     }
 
     componentDidMount() {
-        this.loadTasks();
-    }
-
-    loadTasks(){
-        const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
-        this.setState({tasks: tasks});
-    }
-
-
-    closeModalCreate(){
-        this.setState({modalCreate: false});
-    }
-
-    openModalCreate() {
-        this.setState({modalCreate: true});
-    }
-
-    closeModalEdit(){
-        this.setState({modalEdit: false});
-    }
-
-    openModalEdit(idTask) {
-        const changeState = () => {this.setState({idTaskSelected: idTask})}
-
-        changeState();
-        this.setState({modalEdit: true});
+        this.props.loadTasks();
     }
 
     render() {
 
-        const {tasks, modalCreate, modalEdit, idTaskSelected} = this.state;
+        const {modalCreate, modalEdit, modalAssign, idTaskSelected} = this.state;
 
         return (
             <Container className="content">
+                <FormAssignTask
+                    show={modalAssign}
+                    onHide={this.closeModalAssign}
+                    modalTitle="Asignar Tarea"
+                    nameAction="Asignar"
+                    tasks = {this.props.tasks}
+                    users = {this.props.users}
+                />
                 <FormTask
                     show={modalCreate}
                     onHide={this.closeModalCreate}
                     modalTitle="Crear Tarea"
                     nameAction="Crear"
                     action={1}
-                    loadTasks={this.loadTasks}
+                    loadTasks={this.props.loadTasks}
                 />
                 <FormTask
                     show={modalEdit}
@@ -73,10 +58,11 @@ class SectionTask extends React.Component{
                     nameAction="Editar"
                     action={2}
                     idSelected={idTaskSelected}
-                    loadTasks={this.loadTasks}
+                    loadTasks={this.props.loadTasks}
                 />
                 <Row>
                     <Button className="button" onClick={this.openModalCreate}>Agregar tarea</Button>
+                    <Button className="button" onClick={this.openModalAssign}>Asignar tarea</Button>
                 </Row>
                 <Row>
                     <Table responsive>
@@ -91,7 +77,7 @@ class SectionTask extends React.Component{
                         </thead>
                         <tbody>
                         {
-                            tasks.map((task) => {
+                            this.props.tasks.map((task) => {
                                 return (
                                     <tr key={task.id}>
                                         <td>{task.title}</td>
@@ -116,6 +102,34 @@ class SectionTask extends React.Component{
                 </Row>
             </Container>
         );
+    }
+
+    openModalAssign() {
+        this.setState({modalAssign: true});
+
+    }
+
+    closeModalAssign() {
+        this.setState({modalAssign: false});
+    }
+
+    closeModalCreate(){
+        this.setState({modalCreate: false});
+    }
+
+    openModalCreate() {
+        this.setState({modalCreate: true});
+    }
+
+    closeModalEdit(){
+        this.setState({modalEdit: false});
+    }
+
+    openModalEdit(idTask) {
+        const changeState = () => {this.setState({idTaskSelected: idTask})}
+
+        changeState();
+        this.setState({modalEdit: true});
     }
 }
 export default SectionTask;
