@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import "./SectionsContainer.css";
 import SectionTask from "../sectionTask/SectionTask";
+import SectionUser from "../sectionUser/SectionUser";
 
 class SectionsContainer extends React.Component{
 
@@ -15,6 +16,7 @@ class SectionsContainer extends React.Component{
                       transition={false}
                       >
                     <Tab eventKey="users" title="Usuarios">
+                        <SectionUser/>
                     </Tab>
                     <Tab eventKey="tasks" title="Tareas">
                         <SectionTask/>
