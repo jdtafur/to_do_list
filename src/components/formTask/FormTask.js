@@ -16,6 +16,8 @@ class FormTask extends Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.createTask = this.createTask.bind(this);
+        this.editTask = this.editTask.bind(this);
+
     }
 
     handleInputChange(event) {
@@ -26,7 +28,7 @@ class FormTask extends Component{
         event.preventDefault();
 
         const { title, description, state} = this.state;
-        const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('task')) : [];
+        const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
 
         let task = {id: tasks.length+1,
                     title: title,
@@ -34,23 +36,27 @@ class FormTask extends Component{
                     state: state};
         tasks.push(task);
         localStorage.setItem('tasks', JSON.stringify(tasks));
+
+        this.props.loadTasks();
         this.props.onHide();
     }
 
-    EditTask(event){
+    editTask(event){
         event.preventDefault();
 
         const { title, description, state} = this.state;
-        const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('task')) : [];
+        const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
 
-        let task = {id: this.props.idSeleted,
+        let task = {id: this.props.idSelected,
             title: title,
             description: description,
             state: state};
 
-        const index = tasks.findIndex(element => element.id === this.props.idSeleted);
+        const index = tasks.findIndex(element => element.id === this.props.idSelected);
         tasks.splice(index, 1, task);
         localStorage.setItem('tasks', JSON.stringify(tasks));
+
+        this.props.loadTasks();
         this.props.onHide();
     }
 
@@ -70,7 +76,7 @@ class FormTask extends Component{
                     <Container>
                         <Row className="justify-content-center align-items-center">
                             <Col xs="11" sm="11" md="11" lg="11" xl="11">
-                                <Form onSubmit={this.props.action === 1 ? this.createTask : this.EditTask}>
+                                <Form onSubmit={this.props.action === 1 ? this.createTask : this.editTask}>
                                     <Form.Group>
                                         <Form.Label>Titulo</Form.Label>
                                         <Form.Control required type="text" placeholder="titulo" value={title} onChange={this.handleInputChange} name="title"

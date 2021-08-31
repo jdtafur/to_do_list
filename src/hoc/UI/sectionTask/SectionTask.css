@@ -16,3 +16,9 @@
     font-size: 150%;
     margin: 0 5px;
 }
+
+.content a:hover,
+.content a:active,
+.content a.active{
+    cursor: pointer;
+}
