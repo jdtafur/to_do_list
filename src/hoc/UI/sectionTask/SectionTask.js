@@ -1,7 +1,8 @@
-import {Button, Container, Row, Table} from "react-bootstrap";
+import {Button, Container, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import './SectionTask.css';
+import FormTask from "../../../components/formTask/FormTask";
 
 class SectionTask extends React.Component{
 
@@ -30,6 +31,13 @@ class SectionTask extends React.Component{
 
         return (
             <Container className="content">
+                <FormTask
+                    show={this.state.modalCreate}
+                    onHide={this.closeModalCreate}
+                    modalTitle="Crear Tarea"
+                    nameAction="Crear"
+                    action={1}
+                />
                 <Row>
                     <Button className="button" onClick={this.openModalCreate}>Agregar tarea</Button>
                 </Row>
