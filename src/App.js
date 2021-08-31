@@ -1,14 +1,16 @@
+import React from 'react';
 import './App.css';
-import Toolbar from "./components/toolbar/Toolbar";
-import SectionsContainer from "./hoc/UI/sectionContainer/SectionsContainer";
+import Main from "./hoc/UI/Main/Main";
+import {BrowserRouter,Route,Switch} from "react-router-dom";
 
 function App() {
-  return (
-    <div className="App">
-      <Toolbar/>
-      <SectionsContainer/>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={Main}/>
+            </Switch>
+        </BrowserRouter>
+    );
 }
 
 export default App;
