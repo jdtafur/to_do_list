@@ -11,7 +11,6 @@ class FormUser extends Component{
         this.state = {
             fullName: '',
             rol: '',
-            tasks: [],
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -26,13 +25,12 @@ class FormUser extends Component{
     createUser(event){
         event.preventDefault();
 
-        const { fullName, rol, tasks} = this.state;
+        const { fullName, rol} = this.state;
         const users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
 
         let user = {id: users.length+1,
                     name: fullName,
-                    rol: rol,
-                    tasks: tasks};
+                    rol: rol};
         users.push(user);
         localStorage.setItem('users', JSON.stringify(users));
 

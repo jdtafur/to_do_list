@@ -9,15 +9,51 @@ class FormAssignTask extends Component{
         super(props);
 
         this.state = {
-            userId: '',
             taskId: '',
+            userId: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.createTaskUsers = this.createTaskUsers.bind(this);
     }
 
     handleInputChange(event) {
         this.setState({[event.target.name]: event.target.value})
+    }
+
+    createTaskUsers(event){
+        event.preventDefault();
+
+        const { taskId, userId} = this.state;
+        const assignedTasks = localStorage.getItem('taskUsers') ? JSON.parse(localStorage.getItem('taskUsers')) : [];
+
+        const index = assignedTasks.findIndex(element => element.taskId === taskId);
+
+        if (index === -1){
+
+            const user = this.props.users.find(user => user.id === Number(userId))
+
+            const taskUser = {taskId: taskId, responsible:[user]}
+
+            assignedTasks.push(taskUser);
+            localStorage.setItem('taskUsers', JSON.stringify(assignedTasks));
+
+        }else {
+            const element = assignedTasks.find(element => element.taskId === taskId);
+
+            const user = this.props.users.find(user => user.id === Number(userId))
+
+            element.responsible.push(user);
+
+            const taskUser = {taskId: element.taskId, responsible: element.responsible}
+
+            assignedTasks.splice(index, 1, taskUser);
+            localStorage.setItem('taskUsers', JSON.stringify(assignedTasks));
+
+
+        }
+
+        this.props.onHide();
     }
 
     render() {
@@ -32,10 +68,11 @@ class FormAssignTask extends Component{
                     <Container>
                         <Row className="justify-content-center align-items-center">
                             <Col xs="11" sm="11" md="11" lg="11" xl="11">
-                                <Form onSubmit={()=>{}}>
+                                <Form onSubmit={this.createTaskUsers}>
                                     <Form.Group>
                                         <Form.Label>Tarea</Form.Label>
                                         <Form.Control required onChange={this.handleInputChange} name="taskId" as="select">
+                                            <option key={-1} value={-1}>Seleccionar</option>
                                             {
                                                 this.props.tasks.map((task) => {
                                                     return (
@@ -48,6 +85,7 @@ class FormAssignTask extends Component{
                                     <Form.Group>
                                         <Form.Label>Usuario</Form.Label>
                                         <Form.Control required onChange={this.handleInputChange} name="userId" as="select">
+                                            <option key={-1} value={-1}>Seleccionar</option>
                                             {
                                                 this.props.users.map((user) => {
                                                     return (

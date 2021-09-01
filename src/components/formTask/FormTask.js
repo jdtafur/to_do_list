@@ -64,7 +64,7 @@ class FormTask extends Component{
 
     render() {
 
-        const {title, description, state} = this.setState;
+        const {title, description} = this.setState;
 
         return (
             <>
@@ -91,6 +91,7 @@ class FormTask extends Component{
                                     <Form.Group>
                                         <Form.Label>Estado</Form.Label>
                                         <Form.Control required onChange={this.handleInputChange} name="state" as="select">
+                                            <option key={-1} value={-1}>Seleccionar</option>
                                             {
                                                 states.map((item) => {
                                                     return (
