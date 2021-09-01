@@ -35,7 +35,9 @@ class FormTask extends Component{
         let task = {id: tasks.length+1,
                     title: title,
                     description: description,
-                    state: state};
+                    state: state,
+                    responsible:[]};
+
         tasks.push(task);
         localStorage.setItem('tasks', JSON.stringify(tasks));
 
@@ -49,12 +51,13 @@ class FormTask extends Component{
         const { title, description, state} = this.state;
         const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
 
-        let task = {id: this.props.idSelected,
-            title: title,
-            description: description,
-            state: state};
-
+        const task = tasks.find(task => task.id === Number(this.props.idSelected));
         const index = tasks.findIndex(element => element.id === this.props.idSelected);
+
+        task.title = title;
+        task.description = description;
+        task.state = state
+
         tasks.splice(index, 1, task);
         localStorage.setItem('tasks', JSON.stringify(tasks));
 

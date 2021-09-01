@@ -14,44 +14,24 @@ class FormAssignTask extends Component{
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.createTaskUsers = this.createTaskUsers.bind(this);
+        this.assignTask = this.assignTask.bind(this);
     }
 
     handleInputChange(event) {
         this.setState({[event.target.name]: event.target.value})
     }
 
-    createTaskUsers(event){
+    assignTask(event){
         event.preventDefault();
 
         const { taskId, userId} = this.state;
-        const assignedTasks = localStorage.getItem('taskUsers') ? JSON.parse(localStorage.getItem('taskUsers')) : [];
+        const index = this.props.tasks.findIndex(t => t.id === Number(taskId));
+        const task = this.props.tasks.find(t => t.id === Number(taskId))
+        const user = this.props.users.find(user => user.id === Number(userId))
 
-        const index = assignedTasks.findIndex(element => element.taskId === taskId);
-
-        if (index === -1){
-
-            const user = this.props.users.find(user => user.id === Number(userId))
-
-            const taskUser = {taskId: taskId, responsible:[user]}
-
-            assignedTasks.push(taskUser);
-            localStorage.setItem('taskUsers', JSON.stringify(assignedTasks));
-
-        }else {
-            const element = assignedTasks.find(element => element.taskId === taskId);
-
-            const user = this.props.users.find(user => user.id === Number(userId))
-
-            element.responsible.push(user);
-
-            const taskUser = {taskId: element.taskId, responsible: element.responsible}
-
-            assignedTasks.splice(index, 1, taskUser);
-            localStorage.setItem('taskUsers', JSON.stringify(assignedTasks));
-
-
-        }
+        task.responsible.push(user);
+        this.props.tasks.splice(index, 1, task);
+        localStorage.setItem('tasks', JSON.stringify(this.props.tasks));
 
         this.props.onHide();
     }
@@ -68,7 +48,7 @@ class FormAssignTask extends Component{
                     <Container>
                         <Row className="justify-content-center align-items-center">
                             <Col xs="11" sm="11" md="11" lg="11" xl="11">
-                                <Form onSubmit={this.createTaskUsers}>
+                                <Form onSubmit={this.assignTask}>
                                     <Form.Group>
                                         <Form.Label>Tarea</Form.Label>
                                         <Form.Control required onChange={this.handleInputChange} name="taskId" as="select">
