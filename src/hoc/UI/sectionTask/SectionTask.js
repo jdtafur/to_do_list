@@ -4,6 +4,7 @@ import React from "react";
 import './SectionTask.css';
 import FormTask from "../../../components/formTask/FormTask";
 import FormAssignTask from "../../../components/formAssignTask/FormAssignTask";
+import TableResponsibleModal from "../../../components/tableResponsibleModal/TableResponsibleModal";
 
 class SectionTask extends React.Component{
 
@@ -14,6 +15,8 @@ class SectionTask extends React.Component{
             modalCreate: false,
             modalEdit: false,
             modalAssign: false,
+            modalResponsible: false,
+            responsible: [],
             idTaskSelected: -1,
         };
 
@@ -23,6 +26,8 @@ class SectionTask extends React.Component{
         this.closeModalEdit = this.closeModalEdit.bind(this);
         this.openModalAssign = this.openModalAssign.bind(this);
         this.closeModalAssign = this.closeModalAssign.bind(this);
+        this.openModalResponsible = this.openModalResponsible.bind(this);
+        this.closeModalResponsible = this.closeModalResponsible.bind(this);
     }
 
     componentDidMount() {
@@ -31,10 +36,16 @@ class SectionTask extends React.Component{
 
     render() {
 
-        const {modalCreate, modalEdit, modalAssign, idTaskSelected} = this.state;
+        const {modalCreate, modalEdit, modalAssign,modalResponsible, idTaskSelected, responsible} = this.state;
 
         return (
             <Container className="content">
+                <TableResponsibleModal
+                    show={modalResponsible}
+                    onHide={this.closeModalResponsible}
+                    modalTitle="Responsables"
+                    responsible={responsible}
+                />
                 <FormAssignTask
                     show={modalAssign}
                     onHide={this.closeModalAssign}
@@ -84,8 +95,8 @@ class SectionTask extends React.Component{
                                         <td>{task.description}</td>
                                         <td>{task.state}</td>
                                         <td>
-                                            <a>
-                                                Ver
+                                            <a onClick={() => {this.openModalResponsible(task.responsible)}}>
+                                                ver
                                             </a>
                                         </td>
                                         <td>
@@ -102,6 +113,17 @@ class SectionTask extends React.Component{
                 </Row>
             </Container>
         );
+    }
+
+    openModalResponsible(responsible) {
+        const changeState = () => {this.setState({responsible: responsible})}
+
+        changeState();
+        this.setState({modalResponsible: true});
+    }
+
+    closeModalResponsible() {
+        this.setState({modalResponsible: false});
     }
 
     openModalAssign() {
