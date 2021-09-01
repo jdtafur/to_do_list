@@ -28,10 +28,24 @@ class SectionTask extends React.Component{
         this.closeModalAssign = this.closeModalAssign.bind(this);
         this.openModalResponsible = this.openModalResponsible.bind(this);
         this.closeModalResponsible = this.closeModalResponsible.bind(this);
+        this.deleteUserFromTask = this.deleteUserFromTask.bind(this);
     }
 
     componentDidMount() {
         this.props.loadTasks();
+    }
+
+    deleteUserFromTask(indexUser){
+        const {idTaskSelected} = this.state;
+
+        const index = this.props.tasks.findIndex(t => t.id === Number(idTaskSelected));
+        const task = this.props.tasks.find(t => t.id === Number(idTaskSelected))
+
+        task.responsible.splice(indexUser, 1);
+        this.props.tasks.splice(index, 1, task);
+        localStorage.setItem('tasks', JSON.stringify(this.props.tasks));
+
+        this.closeModalResponsible();
     }
 
     render() {
@@ -45,6 +59,7 @@ class SectionTask extends React.Component{
                     onHide={this.closeModalResponsible}
                     modalTitle="Responsables"
                     responsible={responsible}
+                    deleteUserFromTask={this.deleteUserFromTask}
                 />
                 <FormAssignTask
                     show={modalAssign}
@@ -95,7 +110,7 @@ class SectionTask extends React.Component{
                                         <td>{task.description}</td>
                                         <td>{task.state}</td>
                                         <td>
-                                            <a onClick={() => {this.openModalResponsible(task.responsible)}}>
+                                            <a onClick={() => {this.openModalResponsible(task.responsible,task.id)}}>
                                                 ver
                                             </a>
                                         </td>
@@ -115,10 +130,11 @@ class SectionTask extends React.Component{
         );
     }
 
-    openModalResponsible(responsible) {
-        const changeState = () => {this.setState({responsible: responsible})}
+    openModalResponsible(responsible,taskId) {
+        const changeState = (name, value) => {this.setState({[name]: value})}
 
-        changeState();
+        changeState('responsible',responsible);
+        changeState('idTaskSelected',taskId);
         this.setState({modalResponsible: true});
     }
 
