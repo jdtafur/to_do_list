@@ -52,7 +52,6 @@ class SectionUser extends React.Component{
                         <tr>
                             <th>nombre completo</th>
                             <th>rol</th>
-                            <th>tareas</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,11 +61,6 @@ class SectionUser extends React.Component{
                                     <tr key={user.id}>
                                         <td>{user.name}</td>
                                         <td>{user.rol}</td>
-                                        <td>
-                                            <a>
-                                                Ver
-                                            </a>
-                                        </td>
                                     </tr>
                                 )
                             })
