@@ -1,9 +1,7 @@
 import {Button, Container, Row, Table} from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import './SectionUser.css';
 import FormUser from "../../../components/formUser/FormUser";
-import FormTask from "../../../components/formTask/FormTask";
 
 class SectionUser extends React.Component{
 

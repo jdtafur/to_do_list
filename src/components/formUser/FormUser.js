@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalContainer from "../modalContainer/ModalContainer";
 
 class FormUser extends Component{

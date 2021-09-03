@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalContainer from "../modalContainer/ModalContainer";
 
 const states = [{id:1, state:'Open'},{id:2, state:'In-Progress'},{id:3, state:'Completed'},{id:4, state:'Archived'}]

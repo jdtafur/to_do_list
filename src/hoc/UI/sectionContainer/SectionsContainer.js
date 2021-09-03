@@ -1,5 +1,4 @@
 import {Tab, Tabs} from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 import "./SectionsContainer.css";
 import SectionTask from "../sectionTask/SectionTask";
